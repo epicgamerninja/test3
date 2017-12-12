@@ -1,0 +1,726 @@
+{
+  "type": "Widget",
+  "description": "Base class for all widgets",
+  "extends": "NativeObject",
+  "constructor": {
+    "access": "protected",
+    "parameters": [
+      {
+        "name": "properties",
+        "type": "PropertiesObject",
+        "ts_type": "Properties<Widget>",
+        "optional": true,
+        "description": "Sets all key-value pairs in the properties object as widget properties."
+      }
+    ]
+  },
+  "methods": {
+    "children": [
+      {
+        "parameters": [
+          {
+            "name": "selector",
+            "type": "Selector",
+            "optional": true,
+            "description": "A selector expression or a predicate function to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection",
+        "ts_returns": "WidgetCollection<Widget>",
+        "description": "Returns a (possibly empty) collection of all children of this widget that match the given selector.\n\nWhen writing custom UI components it may be useful to overwrite this method to prevent access to the internal children by external code. Doing so also affects `find` and `apply`, on this widget as well as on all parents, thereby preventing accidental clashes of widget id or class values. See also `_children`, `_find` and `_apply`."
+      },
+      {
+        "ts_only": true,
+        "generics": "U extends Widget",
+        "parameters": [
+          {
+            "name": "constructor",
+            "type": "{ new (...args: any[]): U }",
+            "description": "A class to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection<U>",
+        "description": "Returns a collection containing all children of all widgets in this collection that are instances of the given class."
+      }
+    ],
+    "_children": [
+      {
+        "protected": true,
+        "parameters": [
+          {
+            "name": "selector",
+            "type": "Selector",
+            "optional": true,
+            "description": "A selector expression or a predicate function to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection",
+        "ts_returns": "WidgetCollection<Widget>",
+        "description": "Identical to the `children` method, but intended to be used by subclasses in case the `children` method was overwritten. See `children` for details."
+      },
+      {
+        "protected": true,
+        "ts_only": true,
+        "generics": "U extends Widget",
+        "parameters": [
+          {
+            "name": "constructor",
+            "type": "{ new (...args: any[]): U }",
+            "description": "A class to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection<U>",
+        "description": "Identical to the `children` method, but intended to be used by subclasses in case the `children` method was overwritten. See `children` for details."
+      }
+    ],
+    "siblings": [
+      {
+        "parameters": [
+          {
+            "name": "selector",
+            "type": "Selector",
+            "optional": true,
+            "description": "A selector expression or a predicate function to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection",
+        "ts_returns": "WidgetCollection<Widget>",
+        "description": "Returns a (possibly empty) collection of all siblings of this widget that match the given selector."
+      },
+      {
+        "ts_only": true,
+        "generics": "U extends Widget",
+        "parameters": [
+          {
+            "name": "constructor",
+            "type": "{ new (...args: any[]): U }",
+            "description": "A class to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection<U>",
+        "description": "Returns a (possibly empty) collection of all siblings of this widget that are instances of the given class."
+      }
+    ],
+    "find": [
+      {
+        "parameters": [
+          {
+            "name": "selector",
+            "type": "Selector",
+            "optional": true,
+            "description": "A selector expression or a predicate function to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection",
+        "ts_returns": "WidgetCollection<Widget>",
+        "description": "Returns a collection containing all descendants of all widgets in this collection that match the given selector.\n\nIf you wish to always exclude specific \"internal\" children from the result, overwrite the `children` method on their parent. See `children` for details."
+      },
+      {
+        "ts_only": true,
+        "generics": "U extends Widget",
+        "parameters": [
+          {
+            "name": "constructor",
+            "type": "{ new (...args: any[]): U }",
+            "description": "A class to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection<U>",
+        "description": "Returns a collection containing all descendants of all widgets in this collection that match the given selector.\n\nIf you wish to always exclude  specific \"internal\" children from the result, overwrite the `children` method on their parent. See `children` for details."
+      }
+    ],
+    "_find": [
+      {
+        "protected": true,
+        "parameters": [
+          {
+            "name": "selector",
+            "type": "Selector",
+            "optional": true,
+            "description": "A selector expression or a predicate function to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection",
+        "ts_returns": "WidgetCollection<Widget>",
+        "description": "Identical to the `find` method, but intended to be used by subclasses in case the `children` method was overwritten. See `children` for details."
+      },
+      {
+        "ts_only": true,
+        "protected": true,
+        "generics": "U extends Widget",
+        "parameters": [
+          {
+            "name": "constructor",
+            "type": "{ new (...args: any[]): U }",
+            "description": "A class to filter the results."
+          }
+        ],
+        "returns": "WidgetCollection<U>",
+        "description": "Identical to the `find` method, but intended to be used by subclasses in case the `children` method was overwritten. See `children` for details."
+      }
+    ],
+    "apply": {
+      "parameters": [
+        {
+          "name": "properties",
+          "type": "object",
+          "ts_type": "{[selector: string]: WidgetProperties & {[k: string]: any}}",
+          "description": "An object in the format `{Selector: {property: value, property: value, ... }, Selector: ...}`"
+        }
+      ],
+      "returns": "this",
+      "description": "Applies the given properties to all descendants that match the associated selector(s).\n\nIf you wish to always exclude specific \"internal\" children from this, overwrite the `children` method on their parent. See `children` for details."
+    },
+    "_apply": {
+      "protected": true,
+      "parameters": [
+        {
+          "name": "properties",
+          "type": "object",
+          "ts_type": "{[selector: string]: WidgetProperties & {[k: string]: any}}",
+          "description": "An object in the format `{Selector: {property: value, property: value, ... }, Selector: ...}`"
+        }
+      ],
+      "returns": "this",
+      "description": "Identical to the `apply` method, but intended to be used by subclasses in case the `children` method was overwritten . See `children` for details."
+    },
+    "parent": {
+      "parameters": [],
+      "returns": "Composite",
+      "description": "Returns the parent of this widget or `null` if this widget is not appended to a parent."
+    },
+    "appendTo": {
+      "parameters": [
+        {
+          "name": "parent",
+          "type": "Composite"
+        }
+      ],
+      "returns": "this",
+      "description": "Appends this widget to the given parent. The parent widget must support children (extending *Composite*). If the widget already has a parent, it is removed from the old parent."
+    },
+    "insertBefore": {
+      "parameters": [
+        {
+          "name": "widget",
+          "type": "Widget"
+        }
+      ],
+      "returns": "this",
+      "description": "Inserts this widget directly before the given widget. If the widget already has a parent, it is removed from the old parent."
+    },
+    "insertAfter": {
+      "parameters": [
+        {
+          "name": "widget",
+          "type": "Widget"
+        }
+      ],
+      "returns": "this",
+      "description": "Inserts this widget directly after the given widget. If the widget already has a parent, it is removed from the old parent."
+    },
+    "detach": {
+      "parameters": [],
+      "returns": "this",
+      "description": "Removes this widget from its parent."
+    },
+    "animate": {
+      "parameters": [
+        {
+          "name": "properties",
+          "type": "{transform?: Transformation, opacity?: number}",
+          "description": "The properties and target values to animate."
+        },
+        {
+          "name": "options",
+          "type": "AnimationOptions",
+          "description": "Configures the animation itself."
+        }
+      ],
+      "returns": "Promise<any>",
+      "description": "Starts an animation that transforms the given properties from their current values to the given ones. Supported properties are *transform* and *opacity*. Returns a promise that is resolved once the animation is completed and is rejected if the animation is aborted."
+    },
+    "dispose": {
+      "parameters": [],
+      "description": "Removes this widget from its parent and destroys it. Also disposes of all its children. Triggers a `remove` event on the parent and a `dispose` event on itself. The widget can no longer be used."
+    },
+    "isDisposed": {
+      "parameters": [],
+      "returns": "boolean",
+      "description": "Returns `true` if the widget has been disposed, otherwise `false`."
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "A string to identify the widget by using selectors. IDs are optional. It is strongly recommended that they are unique within a page."
+    },
+    "class": {
+      "type": "string",
+      "description": "A class name or a whitespace separated list of class names to identify the widget. Class names are arbitrary strings that describe a state or a category and help to select widgets using a selector expression. A class name may only contain alphanumeric characters, `_` and `-`. Class names can also be added or removed using the field `classList`."
+    },
+    "classList": {
+      "type": "string[]",
+      "description": "Provides convenient access to the list of class names set to this widget. Class names can either be set using the `class` property or by modifying the `classList` directly."
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": "true",
+      "description": "Whether the widget can be operated."
+    },
+    "visible": {
+      "type": "boolean",
+      "default": "true",
+      "description": "Whether the widget is visible."
+    },
+    "layoutData": {
+      "type": "LayoutData",
+      "description": "Shorthand for all layout properties. See [Layout](../layout.md)."
+    },
+    "left": {
+      "type": "margin",
+      "description": "The position of the widget's left edge relative to the parent or a sibling widget."
+    },
+    "right": {
+      "type": "margin",
+      "description": "The position of the widget's right edge relative to the parent or a sibling widget."
+    },
+    "top": {
+      "type": "margin",
+      "description": "The position of the widget's top edge relative to the parent or a sibling widget."
+    },
+    "bottom": {
+      "type": "margin",
+      "description": "The position of the widget's bottom edge relative to the parent or a sibling widget."
+    },
+    "width": {
+      "type": "dimension",
+      "description": "The width of the widget."
+    },
+    "height": {
+      "type": "dimension",
+      "description": "The height of the widget."
+    },
+    "centerX": {
+      "type": "offset",
+      "description": "The horizontal position of the widget's center relative to the parent's center."
+    },
+    "centerY": {
+      "type": "offset",
+      "description": "The vertical position of the widget's center relative to the parent's center."
+    },
+    "baseline": {
+      "type": "Widget|Selector",
+      "description": "The vertical position of the widget's baseline relative to a sibling widget."
+    },
+    "elevation": {
+      "type": "number",
+      "description": "The position of the widget on the z-axis. Supported on iOS and Android 5.0+.",
+      "platforms": {
+        "windows": false
+      }
+    },
+    "cornerRadius": {
+      "type": "number",
+      "description": "Configure a widget to have rounded corners. Each corner is affected equally. Supported on iOS and Android 5.0+.",
+      "platforms": {
+        "windows": false
+      }
+    },
+    "font": {
+      "type": "Font",
+      "ts_type": "Font|null",
+      "description": "The font used for the widget."
+    },
+    "backgroundImage": {
+      "type": "Image",
+      "description": "An image to be displayed on the widget's background. If the image is smaller than the widget, it will be tiled."
+    },
+    "bounds": {
+      "type": "Bounds",
+      "readonly": true,
+      "description": "The actual location and size of the widget, relative to its parent."
+    },
+    "background": {
+      "type": "Color",
+      "description": "Background color of the widget."
+    },
+    "opacity": {
+      "type": "number",
+      "default": "1",
+      "description": "Opacity of the entire widget, in the range `[0..1]`. Can be used for fade animations."
+    },
+    "transform": {
+      "type": "Transformation",
+      "description": "Modifications to the widget's shape, size, or position. Can be used for animations. **Note:** In Android the *transform* property does not affect the *bounds* property, while it does so in iOS."
+    },
+    "highlightOnTouch": {
+      "type": "boolean",
+      "default": "false",
+      "description": "Whether the widget should show visual feedback while touched. Enabling `highlightOnTouch` will not prevent the touch event from being propagated to the parent widget."
+    },
+    "win_theme": {
+      "type": "string",
+      "values": ["light", "dark", "default"],
+      "default": "default",
+      "description": "Controls the color scheme used for this widget. When set to `\"default\"` the theme is inherited from either the parent (if present) or the OS settings. Available only on windows.",
+      "platforms": {
+        "ios": false,
+        "android": false
+      }
+    },
+    "data": {
+      "type": "object",
+      "ts_type": "{[k: string]: any}",
+      "readonly": true,
+      "description": "A general-purpose object that allows the application to attach arbitrary data to the widget. Manipulations on this object have no effect on the widget itself in any way. Example: `widget.data.myData = myData;`"
+    }
+  },
+  "events": {
+    "tap": {
+      "description": "Fired once when a finger briefly touched the widget.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "longpress": {
+      "description": "Fired after pressing a widget for a specific amount of time (about a second), and again on lifting the finger.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the widget has been hold down long enough, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "pan": {
+      "description": "Fired continuously after a finger touching the widget moved for a certain distance.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panUp": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving up.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panDown": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving down.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panLeft": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving left.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panRight": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving right.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panHorizontal": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving left or right.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "panVertical": {
+      "eventObject": "WidgetPanEvent",
+      "description": "Fired when a finger starts moving up or down.",
+      "parameters": {
+        "state": {
+          "description": "'start' when the finger starts moving, 'change' while the finger is moving, 'end' when the finger has been lifted and 'cancel' when the gesture has been interrupted.",
+          "type": "'start'|'change'|'end'|'cancel'"
+        },
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        },
+        "translationX": {
+          "description": "Current horizontal touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "translationY": {
+          "description": "Current vertical touch offset relative to the first touch.",
+          "type": "number"
+        },
+        "velocityX": {
+          "description": "Current horizontal velocity in pixels per second.",
+          "type": "number"
+        },
+        "velocityY": {
+          "description": "Current vertical velocity in pixels per second.",
+          "type": "number"
+        }
+      }
+    },
+    "swipeUp": {
+      "eventObject": "WidgetSwipeEvent",
+      "description": "Fired when a finger moves up quickly.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "swipeDown": {
+      "eventObject": "WidgetSwipeEvent",
+      "description": "Fired when a finger moves down quickly.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "swipeLeft": {
+      "eventObject": "WidgetSwipeEvent",
+      "description": "Fired when a finger moves left quickly.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "swipeRight": {
+      "eventObject": "WidgetSwipeEvent",
+      "description": "Fired when a finger moves right quickly.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number}[]"
+        }
+      }
+    },
+    "touchStart": {
+      "eventObject": "WidgetTouchEvent",
+      "description": "Fired when a widget is touched. See [Touch Events](../touch.md).",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number, absoluteX: number, absoluteY: number}[]"
+        }
+      }
+    },
+    "touchMove": {
+      "eventObject": "WidgetTouchEvent",
+      "description": "Fired repeatedly while swiping across the screen.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number, absoluteX: number, absoluteY: number}[]"
+        }
+      }
+    },
+    "touchEnd": {
+      "eventObject": "WidgetTouchEvent",
+      "description": "Fired when a touch ends on the same widget than it started on.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number, absoluteX: number, absoluteY: number}[]"
+        }
+      }
+    },
+    "touchCancel": {
+      "eventObject": "WidgetTouchEvent",
+      "description": "Fired instead of touchEnd when the touch ends on another widget than it started on.",
+      "parameters": {
+        "touches": {
+          "description": "Touch coordinates relative to the origin coordinates of the widget.",
+          "type": "{x: number, y: number, absoluteX: number, absoluteY: number}[]"
+        }
+      }
+    },
+    "resize": {
+      "description": "Fired when the widget's size has changed. You can use this event to apply new [*layoutData*](#layoutdata).",
+      "parameters": {
+        "left": {
+          "description": "The horizontal offset from the parent's left edge in dip.",
+          "type": "number"
+        },
+        "top": {
+          "description": "The vertical offset from the parent's top edge in dip.",
+          "type": "number"
+        },
+        "width": {
+          "description": "The width of the widget in dip.",
+          "type": "number"
+        },
+        "height": {
+          "description": "The height of the widget in dip.",
+          "type": "number"
+        }
+      }
+    },
+    "dispose": {
+      "description": "Fired when the widget is about to be disposed. At this point the widget and its children are still accessible."
+    }
+  },
+  "links": [
+    {
+      "title": "Understanding layouts in Tabris.js",
+      "path": "../layout.md"
+    },
+    {
+      "title": "Understanding gesture events in Tabris.js",
+      "path": "../touch.md"
+    }
+  ]
+}

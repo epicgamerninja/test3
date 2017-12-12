@@ -1,0 +1,48 @@
+{
+  "type": "ActionSheet",
+  "extends": "Popup",
+  "constructor": {
+    "access": "public",
+    "parameters": [
+      {
+        "name": "properties",
+        "type": "PropertiesObject",
+        "ts_type": "Properties<ActionSheet>",
+        "optional": true,
+        "description": "Sets all key-value pairs in the properties object as widget properties."
+      }
+    ]
+  },
+  "description": "A pop up dialog that offers a selection. Is automatically disposed when closed.",
+  "platforms": {
+    "windows": false
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title of the action sheet."
+    },
+    "message": {
+      "type": "string",
+      "description": "A descriptive message for the available actions."
+    },
+    "actions": {
+      "type": "{title: string, image?: Image, style?: 'default'|'cancel'|'destructive'}[]",
+      "description": "An array of objects describing the actions to be displayed. Each action must have a title and it can also have an image. Actions with the style `cancel` or `destructive` are displayed in a special way."
+    }
+  },
+  "events": {
+    "close": {
+      "description": "Fired when the action sheet was closed."
+    },
+    "select": {
+      "parameters": {
+        "index": {
+          "type": "number",
+          "description": "The index of the selected action."
+        }
+      },
+      "description": "Fired when an action was selected."
+    }
+  }
+}

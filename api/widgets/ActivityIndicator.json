@@ -1,0 +1,32 @@
+{
+  "type": "ActivityIndicator",
+  "description": "A widget representing a spinning indicator for indeterminate loading / processing time.",
+  "extends": "Widget",
+  "constructor": {
+    "access": "public",
+    "parameters": [
+      {
+        "name": "properties",
+        "type": "PropertiesObject",
+        "ts_type": "Properties<ActivityIndicator>",
+        "optional": true,
+        "description": "Sets all key-value pairs in the properties object as widget properties."
+      }
+    ]
+  },
+  "properties": {
+    "tintColor": {
+      "type": "Color",
+      "description": "The color of the indicator.",
+      "platforms": {
+        "windows": false
+      }
+    }
+  },
+  "links": [
+    {
+      "title": "Simple ActivityIndicator snippet",
+      "path": "${GITHUB_BRANCH}/snippets/activityindicator.js"
+    }
+  ]
+}

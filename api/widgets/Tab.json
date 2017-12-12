@@ -1,0 +1,53 @@
+{
+  "type": "Tab",
+  "description": "A container representing a single tab of a TabFolder widget.",
+  "extends": "Composite",
+  "constructor": {
+    "access": "public",
+    "parameters": [
+      {
+        "name": "properties",
+        "type": "PropertiesObject",
+        "ts_type": "Properties<Tab>",
+        "optional": true,
+        "description": "Sets all key-value pairs in the properties object as widget properties."
+      }
+    ]
+  },
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "The title to be displayed on the tab."
+    },
+    "image": {
+      "type": "Image",
+      "ts_type": "Image|null",
+      "description": "An image to be displayed on the tab.  Will not be shown on iOS if the `TabFolder`'s `tabBarLocation` is set to `top`",
+      "platforms": {
+        "windows": false
+      }
+    },
+    "selectedImage": {
+      "type": "Image",
+      "ts_type": "Image|null",
+      "description": "An image to be displayed on the currently active tab.",
+      "platforms": {
+        "windows": false
+      }
+    },
+    "badge": {
+      "type": "string",
+      "description": "A badge to attach to the tab.",
+      "platforms": {
+        "windows": false,
+        "android": false
+      }
+    }
+  },
+  "links": [
+    {
+      "title": "Snippet with a TabFolder and Tabs",
+      "path": "${GITHUB_BRANCH}/snippets/tabfolder.js"
+    }
+  ]
+}
